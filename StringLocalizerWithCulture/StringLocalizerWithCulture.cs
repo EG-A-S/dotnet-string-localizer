@@ -6,7 +6,7 @@ using System.Resources;
 
 namespace StringLocalizerWithCulture
 {
-    internal sealed class StringLocalizerWithCulture : IStringLocalizer
+    internal class StringLocalizerWithCulture : IStringLocalizer
     {
 
         public StringLocalizerWithCulture(ResourceManager resources, CultureInfo culture)

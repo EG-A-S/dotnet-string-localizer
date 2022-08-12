@@ -5,3 +5,4 @@
 *.suo
 /.vs
 /StringLocalizerWithCulture/obj
+/StringLocalizerWithCulture/bin
