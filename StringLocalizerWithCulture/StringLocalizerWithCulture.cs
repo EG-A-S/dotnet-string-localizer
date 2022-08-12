@@ -6,8 +6,14 @@ using System.Resources;
 
 namespace StringLocalizerWithCulture
 {
-    internal class StringLocalizerWithCulture : IStringLocalizer
+    internal sealed class StringLocalizerWithCulture : IStringLocalizer
     {
+
+        public StringLocalizerWithCulture(ResourceManager resources, CultureInfo culture)
+        {
+            _resources = resources;
+            _culture = culture;
+        }
 
         private readonly CultureInfo _culture;
         private readonly ResourceManager _resources;
@@ -23,5 +29,11 @@ namespace StringLocalizerWithCulture
         }
     }
 
+    internal class StringLocalizerWithCulture<T> : StringLocalizerWithCulture, IStringLocalizer<T>
+    {
+        public StringLocalizerWithCulture(ResourceManager resources, CultureInfo culture) : base(resources, culture)
+        {
+        }
+    }
 
 }
