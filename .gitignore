@@ -6,3 +6,5 @@
 /.vs
 /StringLocalizerWithCulture/obj
 /StringLocalizerWithCulture/bin
+/StringLocalizerWithCulture.Tests/bin
+/StringLocalizerWithCulture.Tests/obj
