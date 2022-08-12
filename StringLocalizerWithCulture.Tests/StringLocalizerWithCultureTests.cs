@@ -13,7 +13,7 @@ namespace StringLocalizerWithCulture.Tests
         public StringLocalizerWithCultureTests() { 
             var services = new ServiceCollection()
                 .AddSingleton<ILoggerFactory>(new LoggerFactory())
-                .AddLocalizationWithCulture()
+                .AddLocalizationWithCulture(options => options.ResourcesPath = "TestData")
                 .BuildServiceProvider();
             _factory = services.GetRequiredService<IStringLocalizerWithCultureFactory>();
         }
@@ -23,7 +23,7 @@ namespace StringLocalizerWithCulture.Tests
         {
             var localizer = _factory.Create(typeof(MyClass), CultureInfo.InvariantCulture);
             var actual = localizer["Hello"];
-            actual.Should().Be("Hello World");
+            actual.Value.Should().Be("Hello World");
         }
 
     }
