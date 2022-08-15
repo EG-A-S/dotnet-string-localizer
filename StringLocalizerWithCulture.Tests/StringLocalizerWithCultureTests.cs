@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 
@@ -20,9 +21,15 @@ namespace StringLocalizerWithCulture.Tests
 
         private void TestGetString(string expected, string key, CultureInfo culture)
         {
-            var localizer = _factory.Create(typeof(MyClass), culture);
-            var actual = localizer[key];
+            var actual = Translate(key, culture);
+            actual.Should().NotBeNull();
             actual.Value.Should().Be(expected);
+        }
+
+        private LocalizedString Translate(string key, CultureInfo culture)
+        {
+            var localizer = _factory.Create(typeof(MyClass), culture);
+            return localizer[key];
         }
 
         [Fact]
@@ -41,6 +48,19 @@ namespace StringLocalizerWithCulture.Tests
         public void GetString_Fi()
         {
             TestGetString("Hei maailma", "Hello", CultureInfo.GetCultureInfo("fi-FI"));
+        }
+
+        [Fact]
+        public void GetString_Null()
+        {
+            this.Invoking(self => self.Translate(null!, CultureInfo.GetCultureInfo("en-US")))
+                .Should().Throw<ArgumentException>();
+        }
+
+        [Fact]
+        public void GetString_Missing()
+        {
+            TestGetString("", "Missing", CultureInfo.GetCultureInfo("en-US"));
         }
 
     }
