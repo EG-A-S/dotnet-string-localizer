@@ -12,18 +12,35 @@ namespace StringLocalizerWithCulture.Tests
 
         public StringLocalizerWithCultureTests() { 
             var services = new ServiceCollection()
-                .AddSingleton<ILoggerFactory>(new LoggerFactory())
+                .AddSingleton<ILoggerFactory, LoggerFactory>()
                 .AddLocalizationWithCulture(options => options.ResourcesPath = "TestData")
                 .BuildServiceProvider();
             _factory = services.GetRequiredService<IStringLocalizerWithCultureFactory>();
         }
 
-        [Fact]
-        public void GetString()
+        private void TestGetString(string expected, string key, CultureInfo culture)
         {
-            var localizer = _factory.Create(typeof(MyClass), CultureInfo.InvariantCulture);
-            var actual = localizer["Hello"];
-            actual.Value.Should().Be("Hello World");
+            var localizer = _factory.Create(typeof(MyClass), culture);
+            var actual = localizer[key];
+            actual.Value.Should().Be(expected);
+        }
+
+        [Fact]
+        public void GetString_Invariant()
+        {
+            TestGetString("Hello World", "Hello", CultureInfo.InvariantCulture);
+        }
+
+        [Fact]
+        public void GetString_En()
+        {
+            TestGetString("Hello World", "Hello", CultureInfo.GetCultureInfo("en-US"));
+        }
+
+        [Fact]
+        public void GetString_Fi()
+        {
+            TestGetString("Hei maailma", "Hello", CultureInfo.GetCultureInfo("fi-FI"));
         }
 
     }

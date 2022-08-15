@@ -12,7 +12,6 @@ namespace StringLocalizerWithCulture
             services.AddOptions();
 
             services.TryAddSingleton<IStringLocalizerWithCultureFactory, StringLocalizerWithCultureFactory>();
-            services.TryAddTransient(typeof(IStringLocalizer<>), typeof(StringLocalizerWithCulture<>));
             if (setupAction != null)
             {
                 services.Configure(setupAction);
