@@ -35,8 +35,14 @@ namespace StringLocalizerWithCulture
         }
 
         public override LocalizedString this[string name, params object[] arguments]
-            => new LocalizedString(name, GetStringSafely(name, _culture));
-
+        {
+            get
+            {
+                var format = GetStringSafely(name, _culture);
+                var value = string.Format(CultureInfo.CurrentCulture, format ?? name, arguments);
+                return new LocalizedString(name, value, resourceNotFound: format == null, searchedLocation: _baseName);
+            }
+        }
     }
 
     internal class StringLocalizerWithCulture<T> : StringLocalizerWithCulture, IStringLocalizer<T>
