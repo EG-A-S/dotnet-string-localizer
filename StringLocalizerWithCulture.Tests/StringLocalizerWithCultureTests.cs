@@ -22,14 +22,15 @@ namespace StringLocalizerWithCulture.Tests
         private void TestGetString(string expected, string key, CultureInfo culture)
         {
             var actual = Translate(key, culture);
-            actual.Should().NotBeNull();
             actual.Value.Should().Be(expected);
         }
 
         private LocalizedString Translate(string key, CultureInfo culture)
         {
             var localizer = _factory.Create(typeof(MyClass), culture);
-            return localizer[key];
+            var result = localizer[key];
+            result.Should().NotBeNull();
+            return result;
         }
 
         [Fact]
@@ -60,7 +61,7 @@ namespace StringLocalizerWithCulture.Tests
         [Fact]
         public void GetString_Missing()
         {
-            TestGetString("", "Missing", CultureInfo.GetCultureInfo("en-US"));
+            Translate("Missing", CultureInfo.GetCultureInfo("en-US")).ResourceNotFound.Should().BeTrue();
         }
 
     }

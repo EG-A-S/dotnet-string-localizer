@@ -51,14 +51,10 @@ namespace StringLocalizerWithCulture
             string baseName,
             CultureInfo culture)
         {
-            return new StringLocalizerWithCulture(
-                new ResourceManager(baseName, assembly),
-                culture
-                //assembly,
-                //baseName,
-                //_resourceNamesCache,
-                //_loggerFactory.CreateLogger<ResourceManagerStringLocalizer>()
-            );
+            var resources = new ResourceManager(baseName, assembly);
+            return new StringLocalizerWithCulture(resources, assembly, baseName, _resourceNamesCache,
+                _loggerFactory.CreateLogger<ResourceManagerStringLocalizer>(),
+                culture);
         }
     }
 }
