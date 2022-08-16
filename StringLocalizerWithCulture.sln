@@ -5,7 +5,12 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringLocalizerWithCulture", "StringLocalizerWithCulture\StringLocalizerWithCulture.csproj", "{8DA84E58-3228-4BE1-A7B4-23A57B1F5B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringLocalizerWithCulture.Tests", "StringLocalizerWithCulture.Tests\StringLocalizerWithCulture.Tests.csproj", "{C53FE560-2103-446C-A390-9D6E50F7C4F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringLocalizerWithCulture.Tests", "StringLocalizerWithCulture.Tests\StringLocalizerWithCulture.Tests.csproj", "{C53FE560-2103-446C-A390-9D6E50F7C4F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1AE54F6F-CC3D-42F6-A854-1A8EDBCAB792}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
