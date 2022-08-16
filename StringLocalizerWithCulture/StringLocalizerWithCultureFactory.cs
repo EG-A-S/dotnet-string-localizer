@@ -12,6 +12,7 @@ namespace StringLocalizerWithCulture
     public interface IStringLocalizerWithCultureFactory
     {
         IStringLocalizer Create(Type resourceSource, CultureInfo culture);
+        IStringLocalizer<T> Create<T>(CultureInfo culture);
     }
 
     // Adapted from https://github.com/dotnet/aspnetcore/issues/7756
@@ -32,27 +33,27 @@ namespace StringLocalizerWithCulture
         private readonly ConcurrentDictionary<string, StringLocalizerWithCulture> _localizerCache 
             = new ConcurrentDictionary<string, StringLocalizerWithCulture>();
 
-        public IStringLocalizer Create(Type resourceSource, CultureInfo culture)
-        {
-            if (resourceSource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceSource));
-            }
+        public IStringLocalizer Create(Type resourceSource, CultureInfo culture) 
+            => CreateResourceManagerStringLocalizer<object>(resourceSource, culture);
 
+        public IStringLocalizer<T> Create<T>(CultureInfo culture) => CreateResourceManagerStringLocalizer<T>(typeof(T), culture);
+
+        private StringLocalizerWithCulture<T> CreateResourceManagerStringLocalizer<T>(Type resourceSource,
+            CultureInfo culture)
+        {
             var typeInfo = resourceSource.GetTypeInfo();
             var baseName = GetResourcePrefix(typeInfo);
             var assembly = typeInfo.Assembly;
-
-            return _localizerCache.GetOrAdd(baseName, _ => CreateResourceManagerStringLocalizer(assembly, baseName, culture));
+            return (StringLocalizerWithCulture<T>)_localizerCache.GetOrAdd(baseName, _ => CreateResourceManagerStringLocalizer<T>(assembly, baseName, culture));
         }
 
-        private StringLocalizerWithCulture CreateResourceManagerStringLocalizer(
+        private StringLocalizerWithCulture<T> CreateResourceManagerStringLocalizer<T>(
             Assembly assembly,
             string baseName,
             CultureInfo culture)
         {
             var resources = new ResourceManager(baseName, assembly);
-            return new StringLocalizerWithCulture(resources, assembly, baseName, _resourceNamesCache,
+            return new StringLocalizerWithCulture<T>(resources, assembly, baseName, _resourceNamesCache,
                 _loggerFactory.CreateLogger<ResourceManagerStringLocalizer>(),
                 culture);
         }

@@ -64,6 +64,13 @@ namespace StringLocalizerWithCulture.Tests
             Translate("Missing", CultureInfo.GetCultureInfo("en-US")).ResourceNotFound.Should().BeTrue();
         }
 
+        [Fact]
+        public void GetString_Typed()
+        {
+            var localizer = _factory.Create<MyClass>(CultureInfo.InvariantCulture);
+            localizer["Hello"].Value.Should().Be("Hello World");
+        }
+
     }
 
     class MyClass
