@@ -1,4 +1,4 @@
-`.NET string localizer with culture`
+# .NET string localizer with culture
 
 Implements [`IStringLocalizer`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.localization.istringlocalizer)
 that is bound to specific culture.
