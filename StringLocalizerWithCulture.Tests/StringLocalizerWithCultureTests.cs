@@ -44,35 +44,21 @@ namespace StringLocalizerWithCulture.Tests
         }
 
         [Fact]
-        public void GetString_Invariant()
-        {
-            TestGetString("Hello World", "Hello", CultureInfo.InvariantCulture);
-        }
+        public void GetString_Invariant() => TestGetString("Hello World", "Hello", CultureInfo.InvariantCulture);
 
         [Fact]
-        public void GetString_En()
-        {
-            TestGetString("Hello World", "Hello", _en);
-        }
+        public void GetString_En() => TestGetString("Hello World", "Hello", _en);
 
         [Fact]
-        public void GetString_Fi()
-        {
-            TestGetString("Hei maailma", "Hello", _fi);
-        }
+        public void GetString_Fi() => TestGetString("Hei maailma", "Hello", _fi);
 
         [Fact]
-        public void GetString_Null()
-        {
+        public void GetString_Null() => 
             this.Invoking(self => self.Translate(null!, _en))
-                .Should().Throw<ArgumentException>();
-        }
+            .Should().Throw<ArgumentException>();
 
         [Fact]
-        public void GetString_Missing()
-        {
-            Translate("Missing", _en).ResourceNotFound.Should().BeTrue();
-        }
+        public void GetString_Missing() => Translate("Missing", _en).ResourceNotFound.Should().BeTrue();
 
         [Fact]
         public void GetString_Typed()
@@ -82,16 +68,12 @@ namespace StringLocalizerWithCulture.Tests
         }
 
         [Fact]
-        public void GetString_Param()
-        {
+        public void GetString_Param() => 
             TestGetString("Hello Mike", "HelloName", new[] { "Mike" }, CultureInfo.InvariantCulture);
-        }
 
         [Fact]
-        public void GetString_Param_Fi()
-        {
+        public void GetString_Param_Fi() => 
             TestGetString("Hei, Mike", "HelloName", new[] { "Mike" }, _fi);
-        }
     }
 
     class MyClass
