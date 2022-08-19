@@ -10,6 +10,8 @@ namespace StringLocalizerWithCulture.Tests
     {
 
         private readonly IStringLocalizerWithCultureFactory _factory;
+        private readonly CultureInfo _en = CultureInfo.GetCultureInfo("en-US");
+        private readonly CultureInfo _fi = CultureInfo.GetCultureInfo("fi-FI");
 
         public StringLocalizerWithCultureTests() { 
             var services = new ServiceCollection()
@@ -33,6 +35,14 @@ namespace StringLocalizerWithCulture.Tests
             return result;
         }
 
+        private void TestGetString(string expected, string key, string[] arguments, CultureInfo culture)
+        {
+            var localizer = _factory.Create(typeof(MyClass), culture);
+            var actual = localizer[key, arguments];
+            actual.Should().NotBeNull();
+            actual.Value.Should().Be(expected);
+        }
+
         [Fact]
         public void GetString_Invariant()
         {
@@ -42,26 +52,26 @@ namespace StringLocalizerWithCulture.Tests
         [Fact]
         public void GetString_En()
         {
-            TestGetString("Hello World", "Hello", CultureInfo.GetCultureInfo("en-US"));
+            TestGetString("Hello World", "Hello", _en);
         }
 
         [Fact]
         public void GetString_Fi()
         {
-            TestGetString("Hei maailma", "Hello", CultureInfo.GetCultureInfo("fi-FI"));
+            TestGetString("Hei maailma", "Hello", _fi);
         }
 
         [Fact]
         public void GetString_Null()
         {
-            this.Invoking(self => self.Translate(null!, CultureInfo.GetCultureInfo("en-US")))
+            this.Invoking(self => self.Translate(null!, _en))
                 .Should().Throw<ArgumentException>();
         }
 
         [Fact]
         public void GetString_Missing()
         {
-            Translate("Missing", CultureInfo.GetCultureInfo("en-US")).ResourceNotFound.Should().BeTrue();
+            Translate("Missing", _en).ResourceNotFound.Should().BeTrue();
         }
 
         [Fact]
@@ -71,6 +81,17 @@ namespace StringLocalizerWithCulture.Tests
             localizer["Hello"].Value.Should().Be("Hello World");
         }
 
+        [Fact]
+        public void GetString_Param()
+        {
+            TestGetString("Hello Mike", "HelloName", new[] { "Mike" }, CultureInfo.InvariantCulture);
+        }
+
+        [Fact]
+        public void GetString_Param_Fi()
+        {
+            TestGetString("Hei, Mike", "HelloName", new[] { "Mike" }, _fi);
+        }
     }
 
     class MyClass

@@ -68,5 +68,14 @@ namespace StringLocalizerWithCulture.Tests.TestData {
                 return ResourceManager.GetString("Hello", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hello {0}.
+        /// </summary>
+        internal static string HelloName {
+            get {
+                return ResourceManager.GetString("HelloName", resourceCulture);
+            }
+        }
     }
 }
