@@ -5,6 +5,14 @@ that is bound to specific culture.
 
 See https://github.com/dotnet/aspnetcore/issues/7756 for context.
 
+## Installation
+
+```powershell 
+PM> Install-Package Rapal.StringLocalizerWithCulture
+```
+
+## Usage
+
 ```csharp
 var services = new ServiceCollection()
     .AddLocalizationWithCulture(options => options.ResourcesPath = "Resources")
