@@ -7,6 +7,10 @@
     <Company>Ørn Software, Rapal</Company>
     <RepositoryUrl>https://github.com/orn-software/dotnet-string-localizer</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageId>Rapal.StringLocalizerWithCulture</PackageId>
+    <Title>StringLocalizer with culture</Title>
+    <Description>StringLocalizer with custom fixed culture</Description>
+    <Authors>Rapal</Authors>
   </PropertyGroup>
 
   <ItemGroup>
